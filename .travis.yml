@@ -22,33 +22,44 @@ before_install:
   - gem install jekyll bundler
   - gem install jekyll html-proofer
   - docker pull miktex/miktex
+  - docker pull jekyll/jekyll
   - docker volume create --name miktex
+  - docker volume create --name jekyll
 
 install:
-  - sudo apt-get install latexmk
-  - sudo apt-get install pandoc
   - git clone https://github.com/michal-h21/make4ht
-  - docker run --rm -ti \
-      -v miktex:/miktex/.miktex \
-      -v $(pwd):/miktex/work \
-      -e MIKTEX_GID=$(id -g) \
-      -e MIKTEX_UID=$(id -u) \
-      miktex/miktex \
+  - docker run --rm -ti
+      -v jekyll:/jekyll/.jekyll
+      -v $(pwd):/srv/jekyll
+      jekyll/minimal:$JEKYLL_VERSION
+      gem install jekyll html-proofer
+  - docker run --rm -ti 
+      -v miktex:/miktex/.miktex 
+      -v $(pwd):/miktex/work 
+      -e MIKTEX_GID=$(id -g) 
+      -e MIKTEX_UID=$(id -u)
+      miktex/miktex
+      sudo apt-get install latexmk &&
+      sudo apt-get install pandoc &&
       cd make4ht && make && make install
 
 before_script:
   - chmod +x ./script/cibuild.sh
 
 script:
-  - docker run --rm -ti \
-      -v miktex:/miktex/.miktex \
-      -v $(pwd):/miktex/work \
-      -e MIKTEX_GID=$(id -g) \
-      -e MIKTEX_UID=$(id -u) \
-      miktex/miktex \
+  - docker run --rm -ti
+      -v miktex:/miktex/.miktex
+      -v $(pwd):/miktex/work
+      -e MIKTEX_GID=$(id -g)
+      -e MIKTEX_UID=$(id -u)
+      miktex/miktex
       find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
   - bundle install
-  - ./script/cibuild.sh
+  - docker run --rm -ti
+      -v jekyll:/jekyll/.jekyll
+      -v $(pwd):/srv/jekyll
+      jekyll/minimal:$JEKYLL_VERSION
+      ./script/cibuild.sh
 
 deploy:
   provider: pages
