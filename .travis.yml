@@ -1,0 +1,46 @@
+dist: bionic
+
+language: ruby
+
+rvm:
+- 2.0.0
+- 1.9.3
+- jruby-19mode
+- rbx-2
+
+env:
+  global:
+    secure: ip6gXO+XNsgNpagW6ajZ19h77DF1F21Z3iE4JiiO6mQ25fhGiL/0Joh+JhH3/8w2sk8NUq1+KAu0Dz8gJ/gKhENb4aSXLyNKoLtQ1qWRX4IbpW+atS13PLzn5zZGYRCtFpuch1gMT7sQvdGEo9W7k2fu6ad/xkFv+QWn/VXmGmtQxfEQ2u+5Ckaa9nvtSDdzoPFRFbnFjylK1B2Sao3HV6Y5iVYfSAw3hqFjF9X4KfKPv3Cd3+8icNHMIDZWMhh7F6x9AjqahAAbxmvr7e4mZVjmSH5Q8ESwG7V3vJKr6i0y1OresINk3Fw4FcArVVuLbWajqLftMa4cWZygPIWo2vKLqSDqIT45+qP3nMUS05cg84sGS7dW0elPycWe4JZccrMF9c/n4n13YIoq1Ihh2fN4GhILRYsUc2K9M7UnAqbK80B+xrpx+yWPWKO5vUpP+s4zuSg7G4bZOVSQShQy1Q4UBSVnn/VZZ+46gRk8IJwzmvE4FJZ6B3rVbOrWPIjFcVBiDAmwUVCj4PXgs/BhGruwX9r9qWNADbQ+Y3IMn8nwoIG5b7YE4cHtTJK1VDhRY/8MP6bqX7acIgR4h20MeDnDnwE0vHNWlphuNw91HaHwYnm4qsYsab+w6YuhCtSFVPwGCC6kcePGKR3prgpu+RKaPgvxcJe7utXQggPJR70=
+
+install:
+  # Local
+  - sudo apt-get install -qq luatex texlive-base texlive-luatex luarocks
+  # Global 
+  - sudo apt-get install -qq latexmk texlive texlive-xetex  texlive-fonts-recommended fonts-lmodern tex-gyre fonts-texgyre fonts-noto
+  - git fetch --tags
+  - make
+  - make justinstall
+
+jobs:
+  include:
+    - script: bundle update
+      name: "Bundle update"
+    - stage: make4ht
+      name: "Global make4ht build"
+      script: git fetch --tags
+    - script: make
+    - script: make justinstall
+    - stage: tex
+      name: "Tex build"
+      script: find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
+    - stage: jekyll
+      name: "Jekyll build"
+      script: jekyll build
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: "$GITHUB_TOKEN"
+  keep_history: true
+  on:
+    branch: master
