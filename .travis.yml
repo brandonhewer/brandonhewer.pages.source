@@ -22,15 +22,18 @@ before_install:
 
 install:
   # Local
-  - sudo apt-get install -qq luatex texlive-base texlive-luatex luarocks
-  # Global 
-  - sudo apt-get install -qq latexmk texlive texlive-xetex  texlive-fonts-recommended fonts-lmodern tex-gyre fonts-texgyre fonts-noto
+  - sudo apt-get install latexmk
+  - git clone https://github.com/michal-h21/make4ht
+  - cd make4ht
+  - make
+  - make install
 
 before_script:
   - chmod +x ./script/cibuild.sh
 
 script:
   - find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
+  - bundle install
   - ./script/cibuild.sh
 
 deploy:
