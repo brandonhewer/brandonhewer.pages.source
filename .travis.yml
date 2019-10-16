@@ -2,6 +2,8 @@ dist: bionic
 
 language: ruby
 
+services: docker
+
 rvm:
   - 2.6.3
 
@@ -19,20 +21,32 @@ before_install:
   - gem install bundler
   - gem install jekyll bundler
   - gem install jekyll html-proofer
+  - docker pull miktex/miktex
+  - docker volume create --name miktex
 
 install:
   - sudo apt-get install latexmk
   - sudo apt-get install pandoc
   - git clone https://github.com/michal-h21/make4ht
-  - cd make4ht
-  - make
-  - make install
+  - docker run --rm -ti \
+      -v miktex:/miktex/.miktex \
+      -v $(pwd):/miktex/work \
+      -e MIKTEX_GID=$(id -g) \
+      -e MIKTEX_UID=$(id -u) \
+      miktex/miktex \
+      cd make4ht && make && make install
 
 before_script:
   - chmod +x ./script/cibuild.sh
 
 script:
-  - find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
+  - docker run --rm -ti \
+      -v miktex:/miktex/.miktex \
+      -v $(pwd):/miktex/work \
+      -e MIKTEX_GID=$(id -g) \
+      -e MIKTEX_UID=$(id -u) \
+      miktex/miktex \
+      find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
   - bundle install
   - ./script/cibuild.sh
 
