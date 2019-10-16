@@ -33,7 +33,7 @@ jobs:
       name: "Global make4ht build"
       script: git fetch --tags
       script: make
-    - script: make justinstall
+      script: make install
     - stage: tex
       name: "Tex build"
       script: find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
