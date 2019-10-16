@@ -3,11 +3,16 @@ dist: bionic
 language: ruby
 
 rvm:
-  - 2.3
+  - 2.6.3
 
 env:
   global:
     secure: ip6gXO+XNsgNpagW6ajZ19h77DF1F21Z3iE4JiiO6mQ25fhGiL/0Joh+JhH3/8w2sk8NUq1+KAu0Dz8gJ/gKhENb4aSXLyNKoLtQ1qWRX4IbpW+atS13PLzn5zZGYRCtFpuch1gMT7sQvdGEo9W7k2fu6ad/xkFv+QWn/VXmGmtQxfEQ2u+5Ckaa9nvtSDdzoPFRFbnFjylK1B2Sao3HV6Y5iVYfSAw3hqFjF9X4KfKPv3Cd3+8icNHMIDZWMhh7F6x9AjqahAAbxmvr7e4mZVjmSH5Q8ESwG7V3vJKr6i0y1OresINk3Fw4FcArVVuLbWajqLftMa4cWZygPIWo2vKLqSDqIT45+qP3nMUS05cg84sGS7dW0elPycWe4JZccrMF9c/n4n13YIoq1Ihh2fN4GhILRYsUc2K9M7UnAqbK80B+xrpx+yWPWKO5vUpP+s4zuSg7G4bZOVSQShQy1Q4UBSVnn/VZZ+46gRk8IJwzmvE4FJZ6B3rVbOrWPIjFcVBiDAmwUVCj4PXgs/BhGruwX9r9qWNADbQ+Y3IMn8nwoIG5b7YE4cHtTJK1VDhRY/8MP6bqX7acIgR4h20MeDnDnwE0vHNWlphuNw91HaHwYnm4qsYsab+w6YuhCtSFVPwGCC6kcePGKR3prgpu+RKaPgvxcJe7utXQggPJR70=
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
+
+exclude: [vendor]
+
+cache: bundler
 
 before_install:
   - gem update --system
@@ -23,10 +28,11 @@ install:
   - make
   - make justinstall
 
+before_script:
+  - chmod +x ./script/cibuild
+
 jobs:
   include:
-    - script: bundle update
-      name: "Bundle update"
     - stage: make4ht
       name: "Global make4ht build"
       script: git fetch --tags
@@ -37,7 +43,7 @@ jobs:
       script: find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
     - stage: jekyll
       name: "Jekyll build"
-      script: jekyll build
+      script: ./script/cibuild
 
 deploy:
   provider: pages
