@@ -27,14 +27,9 @@ install:
 before_script:
   - chmod +x ./script/cibuild.sh
 
-jobs:
-  include:
-    - stage: tex
-      name: "Tex build"
-      script: find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
-    - stage: jekyll
-      name: "Jekyll build"
-      script: ./script/cibuild.sh
+script:
+  - find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
+  - ./script/cibuild.sh
 
 deploy:
   provider: pages
