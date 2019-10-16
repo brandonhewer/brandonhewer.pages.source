@@ -30,12 +30,12 @@ install:
   - git clone https://github.com/michal-h21/make4ht
   - docker run --rm -ti
       -v jekyll:/jekyll/.jekyll
-      -v $(pwd):/srv/jekyll
+      --volume="$PWD:/srv/jekyll"
       jekyll/minimal:$JEKYLL_VERSION
       gem install jekyll html-proofer
   - docker run --rm -ti 
       -v miktex:/miktex/.miktex 
-      -v $(pwd):/miktex/work 
+      --volume="$PWD:/miktex/work"
       -e MIKTEX_GID=$(id -g) 
       -e MIKTEX_UID=$(id -u)
       miktex/miktex
@@ -49,7 +49,7 @@ before_script:
 script:
   - docker run --rm -ti
       -v miktex:/miktex/.miktex
-      -v $(pwd):/miktex/work
+      --volume="$PWD:/miktex/work"
       -e MIKTEX_GID=$(id -g)
       -e MIKTEX_UID=$(id -u)
       miktex/miktex
@@ -57,7 +57,7 @@ script:
   - bundle install
   - docker run --rm -ti
       -v jekyll:/jekyll/.jekyll
-      -v $(pwd):/srv/jekyll
+      --volume="$PWD:/srv/jekyll"
       jekyll/minimal:$JEKYLL_VERSION
       ./script/cibuild.sh
 
