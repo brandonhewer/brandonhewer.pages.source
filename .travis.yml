@@ -23,6 +23,7 @@ before_install:
 install:
   # Local
   - sudo apt-get install latexmk
+  - sudo apt-get install pandoc
   - git clone https://github.com/michal-h21/make4ht
   - cd make4ht
   - make
