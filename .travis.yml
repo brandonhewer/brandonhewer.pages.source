@@ -32,12 +32,12 @@ install:
   - cd ..
 
 script:
-  - find ./_posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
+  - find ./_posts-tex -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
   - bundle install
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
       jekyll/jekyll:4.0
-      jekyll build
+      jekyll build --trace
   - htmlproofer ./_site --disable-external
 
 deploy:
