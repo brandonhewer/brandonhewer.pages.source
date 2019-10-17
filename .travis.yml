@@ -26,8 +26,10 @@ before_install:
 install:
   - git clone https://github.com/michal-h21/make4ht
   - gem install html-proofer
+  - apt-get install latexmk
+  - apt-get install pandoc
   - chmod +x ./script/make4htinstall.sh
-  - sudo docker run --rm -it
+  - docker run --rm -it
       -v miktex:/miktex/.miktex 
       --volume="$PWD:/miktex/work"
       -e MIKTEX_GID=$(id -g) 
