@@ -24,15 +24,14 @@ before_install:
 install:
   - gem install html-proofer
   - sudo apt-get update
-  - sudo apt-get install texlive-luatex
-  - luaotfload-tool --update
+  #- sudo apt-get install texlive-luatex
+  #- luaotfload-tool --update
   #- sudo apt-get install texlive-latex-extra
   - sudo apt-get install latexmk
   - sudo apt-get install pandoc
   - git clone https://github.com/michal-h21/make4ht
   - cd make4ht
-  - make
-  - make install
+  - make justinstall
 
 script:
   - find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
