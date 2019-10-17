@@ -29,10 +29,10 @@ install:
   - sudo apt-get install miktex
   - sudo apt-get install latexmk
   - sudo apt-get install pandoc
-  #- git clone https://github.com/michal-h21/make4ht
-  #- cd make4ht
-  #- make
-  #- make install
+  - git clone https://github.com/michal-h21/make4ht
+  - cd make4ht
+  - make
+  - make install
 
 script:
   - find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
