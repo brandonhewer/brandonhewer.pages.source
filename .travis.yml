@@ -40,7 +40,7 @@ script:
       --volume="$PWD:/srv/jekyll"
       jekyll/minimal:4.0
       jekyll build
-  - bundle exec htmlproofer ./_site --disable-external
+  - htmlproofer ./_site --disable-external
 
 deploy:
   provider: pages
