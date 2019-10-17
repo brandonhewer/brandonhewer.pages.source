@@ -27,7 +27,7 @@ install:
   - git clone https://github.com/michal-h21/make4ht
   - gem install html-proofer
   - chmod +x ./script/make4htinstall.sh
-  - docker run --rm -it
+  - sudo docker run --rm -it
       -v miktex:/miktex/.miktex 
       --volume="$PWD:/miktex/work"
       -e MIKTEX_GID=$(id -g) 
