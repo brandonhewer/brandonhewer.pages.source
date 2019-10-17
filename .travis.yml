@@ -24,9 +24,9 @@ before_install:
 install:
   - gem install html-proofer
   - sudo apt-get update
-  #- sudo apt-get install texlive-luatex
-  #- luaotfload-tool --update
   #- sudo apt-get install texlive-latex-extra
+  - sudo apt-get install texlive
+  - tlmgr update
   - sudo apt-get install latexmk
   - git clone https://github.com/michal-h21/make4ht
   - cd make4ht
@@ -36,10 +36,9 @@ install:
 script:
   - find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
   - bundle install
-  - docker run --rm -ti
-      -v jekyll:/jekyll/.jekyll
+  - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
-      jekyll/minimal:$JEKYLL_VERSION
+      jekyll/minimal:4.0
       jekyll build
   - bundle exec htmlproofer ./_site --disable-external
 
