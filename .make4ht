@@ -1,4 +1,4 @@
-local outdir = "_posts/"
+local outdir = "_posts"
 local domfilter = require "make4ht-domfilter"
 
 -- remove the \maketitle environment from the HTML file, title will be inserted in the template
