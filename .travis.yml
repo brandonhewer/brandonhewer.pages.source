@@ -29,10 +29,10 @@ install:
   - sudo apt-get install miktex
   - sudo apt-get install latexmk
   - sudo apt-get install pandoc
-  - git clone https://github.com/michal-h21/make4ht
-  - cd make4ht
-  - make
-  - make install
+  #- git clone https://github.com/michal-h21/make4ht
+  #- cd make4ht
+  #- make
+  #- make install
 
 before_script:
   - chmod +x ./script/runmake4ht.sh
