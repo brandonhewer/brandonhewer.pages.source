@@ -25,10 +25,7 @@ before_install:
 
 install:
   - git clone https://github.com/michal-h21/make4ht
-  - docker run --rm -it
-      --volume="$PWD:/srv/jekyll"
-      jekyll/minimal:4.0
-      gem install jekyll html-proofer
+  - gem install jekyll html-proofer
   - docker run --rm -it
       -v miktex:/miktex/.miktex 
       --volume="$PWD:/miktex/work"
