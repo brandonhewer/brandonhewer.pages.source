@@ -30,8 +30,6 @@ install:
   - docker run --rm -it
       -v miktex:/miktex/.miktex 
       --volume="$PWD:/miktex/work"
-      -e MIKTEX_GID=$(id -g) 
-      -e MIKTEX_UID=$(id -u)
       miktex/miktex
       ./script/make4htinstall.sh
 
@@ -43,8 +41,6 @@ script:
   - docker run --rm -ti
       -v miktex:/miktex/.miktex
       --volume="$PWD:/miktex/work"
-      -e MIKTEX_GID=$(id -g)
-      -e MIKTEX_UID=$(id -u)
       miktex/miktex
       chmod +x ./script/runmake4ht.sh && ./script/runmake4ht.sh
   - bundle install
