@@ -26,6 +26,7 @@ install:
   - sudo apt-get update
   #- sudo apt-get install texlive-latex-extra
   - sudo apt-get install texlive
+  - sudo apt-get install texlive-luatex
   #- sudo apt-get install xzdec
   #- tlmgr init-usertree
   #- tlmgr update --all
