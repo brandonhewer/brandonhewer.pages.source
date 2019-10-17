@@ -31,7 +31,8 @@ install:
   - cd ..
 
 script:
-  - find _posts-tex -name "*.tex" -type f -exec make4ht -l -um publish {} "svg" \;
+  - find ./_posts-tex -name "*.tex"
+  - find ./_posts-tex -name "*.tex" -type f -exec make4ht -l -um publish {} "svg" \;
   - chmod +x ./script/cibuild.sh
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
