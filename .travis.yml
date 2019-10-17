@@ -34,9 +34,6 @@ install:
   #- make
   #- make install
 
-before_script:
-  - chmod +x ./script/runmake4ht.sh
-
 script:
   - find _posts-tex/ -name "*.tex" -type f -exec make4ht -um publish {} "svg" \;
   - bundle install
