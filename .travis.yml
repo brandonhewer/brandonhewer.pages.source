@@ -26,6 +26,7 @@ install:
   - sudo apt-get update
   #- sudo apt-get install texlive-latex-extra
   - sudo apt-get install texlive
+  - tlmgr init-usertree
   - tlmgr update
   - sudo apt-get install latexmk
   - git clone https://github.com/michal-h21/make4ht
