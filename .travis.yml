@@ -32,11 +32,12 @@ script:
       --volume="$PWD:/data"
       mirisbowring/texlive_ctan_basic:2019
       ./script/texbuild.sh
+  - bundle install
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
       --volume="$PWD/vendor/bundle:/usr/local/bundle"
       jekyll/jekyll:4.0
-      ./script/cibuild.sh
+      jekyll build --trace
   - htmlproofer ./_site --disable-external
 
 deploy:
