@@ -24,21 +24,21 @@ before_install:
   #- chmod +x ./script/cibuild.sh
 
 script:
-  - mkdir temp
-  - find . "*.html" -type f -exec mv {} temp \;
-  - find . "*.css" -type f -exec mv {} temp \;
+  - mkdir tempfiles
+  - find . "*.html" -maxdepth 1 -type f -exec mv {} tempfiles \;
+  - find . "*.css" -maxdepth 1 -type f -exec mv {} tempfiles \;
   - docker run --rm -it
       --volume="$PWD:/data"
       mirisbowring/texlive_ctan_basic:2019
       ./script/texbuild.sh
   - rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
-  - rm .make4ht
+  - rm -i ./.make4ht
   - rm -rf script
   - rm -rf _posts-tex
   - rm -rf script
   - mv temp/* .
   - rm -rf temp
-  - rm .travis.yml
+  - rm -i ./.travis.yml
   #- docker run --rm -it
   #    --volume="$PWD:/srv/jekyll"
   #    --volume="$PWD/vendor/bundle:/usr/local/bundle"
