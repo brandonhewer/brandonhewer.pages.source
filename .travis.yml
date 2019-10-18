@@ -18,22 +18,21 @@ cache: bundler
 
 before_install:
   - gem update --system
+  - docker pull jekyll/jekyll:4.0
+  - docker pull miktex/miktex-build-ubuntu:bionic
+  - chmod +x ./script/texbuild.sh
+  - chmod +x ./script/cibuild.sh
 
 install:
   - gem install html-proofer
   - sudo apt-get update
-  - sudo apt-get install texlive
-  - sudo apt-get install texlive-luatex
-  - sudo apt-get install latexmk
-  - git clone https://github.com/michal-h21/make4ht
-  - cd make4ht
-  - make justinstall
-  - cd ..
 
 script:
+  - docker run --rm -it
+      --volume="$PWD:/work/miktex"
+      miktex/miktex-build-ubuntu
+      ./script/texbuild.sh
   - find ./_posts-tex -name "*.tex" -type f -exec make4ht -l -um publish {} "svg" \;
-  #- make4ht -um publish ./_posts-tex/test.tex "svg"
-  - chmod +x ./script/cibuild.sh
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
       jekyll/jekyll:4.0
