@@ -22,9 +22,7 @@ script:
       ./script/texbuild.sh
   - rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
   - rm -v .make4ht
-  - rm -rf script
-  - rm -rf _posts-tex
-  - rm -rf script
+  - rm -rf script _posts-tex script
   - find tempfiles -maxdepth 1 -type f -exec mv {} . \;
   - rm -rf tempfiles
   - rm -v .travis.yml
