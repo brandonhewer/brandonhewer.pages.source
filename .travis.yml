@@ -27,9 +27,6 @@ script:
   - mkdir temp
   - mv *.html temp
   - mv *.css temp
-  - htmlfiles=$(find . -name '*.html' | paste -s -d '|' -)
-  - htmlfiles=$(find . -name '*.css' | paste -s -d '|' -)
-  - find . -name '*.html' -print0 -type f | sed 's/\0/\-or/g'
   - docker run --rm -it
       --volume="$PWD:/data"
       mirisbowring/texlive_ctan_basic:2019
@@ -41,6 +38,7 @@ script:
   - rm -rf script
   - mv temp/* .
   - rm -rf temp
+  - rm .travis.yml
   #- docker run --rm -it
   #    --volume="$PWD:/srv/jekyll"
   #    --volume="$PWD/vendor/bundle:/usr/local/bundle"
