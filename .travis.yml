@@ -9,43 +9,28 @@ rvm:
 
 env:
   global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
   - secure: "b7g7UuHlVo9uiWFwXZM+2vPvN/jxaDvSt7zNFK+zXdbZQWjPQOu1eY2ZcoBypu0SwAtFSe9/9VBR9AHAEnn1UQcVxEtRLlqXrWwDGCBPCA2EiDt4FIIbtL7pzDGqm+ZqjngNMKnjJ8nlo0LUa8GR3BivKlXjJKWt9XLvVxNZcFXjYB8TQbRB8oxYA82NHg3AgzJp5waVpdY3r6rqckm77J9pdrcizb/adJ+46aco0sbIaQFVp40W0I+etWPI/jTwtmXYWXi4G0xnD38+8T59oEoEdmNbMuarzwPa2E2L3XUq6hRvo3bh4PbOHWqxFgm57UGtCHafP1/zBuxL0jFyS0F9me7/Umn923IEzzKknmG6BKQXfBsN20wANfc8G6oS9Q0znnXT0RgswoTf4shRYyqWT6Ck+82OzJjL9GxqH22L0zNBGXM44sAmFNpMy+CqDKeOY6ah8nWl5+WtUbBEsHOxMM5uINZTgVYq32Xd+IFoKWz6FKR51/ahcoZt9+VKyk1NiMS3j75/WOVv3gXaNLDdUTktvDqOk/uevjRa44Yhbu2F4E/qZi85j/hdDbqPaD+nMUFwgcSA0b/KuibeCa3UvT29NSPxHs3eJKTSmrQxibs3Eo85BISoXRhC2eh4EggDQPNBcd/rLoVCQTJPnmT1i93ZyiV8ZahMQE2QKbk="
 
-exclude: [vendor]
-
-cache: bundler
-
 before_install:
-  #- gem update --system
-  #- docker pull jekyll/jekyll:4.0
   - docker pull mirisbowring/texlive_ctan_basic:2019
   - chmod +x ./script/texbuild.sh
-  #- chmod +x ./script/cibuild.sh
 
 script:
   - mkdir tempfiles
-  - find . "*.html" -maxdepth 1 -type f -exec mv {} tempfiles \;
-  - find . "*.css" -maxdepth 1 -type f -exec mv {} tempfiles \;
+  - find . -name "*.html" -maxdepth 1 -type f -exec mv {} tempfiles \;
+  - find . -name "*.css" -maxdepth 1 -type f -exec mv {} tempfiles \;
   - docker run --rm -it
       --volume="$PWD:/data"
       mirisbowring/texlive_ctan_basic:2019
       ./script/texbuild.sh
   - rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
-  - rm -i ./.make4ht
+  - rm -v .make4ht
   - rm -rf script
   - rm -rf _posts-tex
   - rm -rf script
-  - mv temp/* .
-  - rm -rf temp
-  - rm -i ./.travis.yml
-  #- docker run --rm -it
-  #    --volume="$PWD:/srv/jekyll"
-  #    --volume="$PWD/vendor/bundle:/usr/local/bundle"
-  #    -e JEKYLL_UID="$UID" 
-  #    -e JEKYLL_GID="$GID"
-  #    jekyll/jekyll:4.0
-  #    ./script/cibuild.sh
+  - mv tempfiles/* .
+  - rm -rf tempfiles
+  - rm -v .travis.yml
 
 deploy:
   provider: pages
