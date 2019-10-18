@@ -35,6 +35,8 @@ script:
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
       --volume="$PWD/vendor/bundle:/usr/local/bundle"
+      -e JEKYLL_UID="$UID" 
+      -e JEKYLL_GID="$GID"
       jekyll/jekyll:4.0
       jekyll build --trace
   - htmlproofer ./_site --disable-external
