@@ -34,6 +34,7 @@ script:
       ./script/texbuild.sh
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
+      --volume="$PWD/vendor/bundle:/usr/local/bundle"
       jekyll/jekyll:4.0
       ./script/cibuild.sh
   - htmlproofer ./_site --disable-external
