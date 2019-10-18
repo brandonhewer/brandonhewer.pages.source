@@ -32,7 +32,6 @@ script:
       --volume="$PWD:/data"
       mirisbowring/texlive_ctan_full:2019
       ./script/texbuild.sh
-  - find ./_posts-tex -name "*.tex" -type f -exec make4ht -l -um publish {} "svg" \;
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
       jekyll/jekyll:4.0
