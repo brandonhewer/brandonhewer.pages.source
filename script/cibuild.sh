@@ -2,4 +2,4 @@
 
 set -e
 bundle install
-jekyll build --trace
+sudo -u jekyll build --trace
