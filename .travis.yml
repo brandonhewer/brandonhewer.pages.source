@@ -35,7 +35,7 @@ script:
   - docker run --rm -it
       --volume="$PWD:/srv/jekyll"
       jekyll/jekyll:4.0
-      ./script/cibuild.sh
+      sudo -u ./script/cibuild.sh
   - htmlproofer ./_site --disable-external
 
 deploy:
