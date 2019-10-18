@@ -23,9 +23,6 @@ before_install:
   - chmod +x ./script/texbuild.sh
   - chmod +x ./script/cibuild.sh
 
-install:
-  - bundle install html-proofer
-
 script:
   - docker run --rm -it
       --volume="$PWD:/data"
