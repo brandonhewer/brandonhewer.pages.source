@@ -8,21 +8,21 @@ env:
   global:
   - secure: gUM7Jl/8TQdjP7pUU+k+RgHBx6sAYz0EsgZJD5Bae4FoDuKRLccbOjp+rAGbY2gza9Qbp+9eu5csIupUWKQ7cnZ93OCHgm1gZcwYnVENvvZCjCM3fsFo8EVh3hyOTE+Gs3LbODAWei64BiqssTzYW7DIMkv7aaQywqQasmCNGTLZ9XAZU52ZTqDgJDcS1OeIwcOlv157BKkXOPFTDxOGAJIPIiOs1zYALEpApRq9gWgCBIABX1dNrEoAfwtsErLLncHmCjvpS23no0qPVShc6q5Blo22OpoTMgWd4FLpRSV0mJgdtt075ipZO7Eq2ELQrinb2QVMuIAgjwhe7CvEPyxC771R6tJmitLPIodzwAu/ctHG5Md8MlRzQXVM5WkFYGNSytg3PV1RzGvYsGfxxve0guwDngqOMDtP4JAcrp/7TM4/FHZCydnxVQNjuk1OtIStAsGBDX97z1WKcA1KgrtV6OrTjG6+xom5fZMrnK8VJTOf7qiI0626/GjRhPJnRlPkxeDx4Mn7Ukz2ibVxEEYSMFWikc8lA1EzbujlfQli1iGHBWWST9tSK+3MvucLILQbyJRryvnCM0XbtVTWZxNSsGIMuX4KbKfQhLytKwDa6JkRPiv9ALcBkiZlJAVXcGrBSxZJFZqVPvV4hapMTFEczLz5MkPFXzWUkTFWoLg=
 
-  before_install:
-- docker pull mirisbowring/texlive_ctan_basic:2019
-- chmod +x ./script/texbuild.sh
+before_install:
+  - docker pull mirisbowring/texlive_ctan_basic:2019
+  - chmod +x ./script/texbuild.sh
 
 script:
-- mkdir tempfiles
-- find . -maxdepth 1 -name "*.html" -type f -exec mv {} tempfiles \;
-- find . -maxdepth 1 -name "*.css" -type f -exec mv {} tempfiles \;
-- docker run --rm -it --volume="$PWD:/data" mirisbowring/texlive_ctan_basic:2019 ./script/texbuild.sh
-- rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
-- rm -v .make4ht
-- rm -rf script _posts-tex script
-- find tempfiles -maxdepth 1 -type f -exec mv {} . \;
-- rm -rf tempfiles
-- rm -v .travis.yml
+  - mkdir tempfiles
+  - find . -maxdepth 1 -name "*.html" -type f -exec mv {} tempfiles \;
+  - find . -maxdepth 1 -name "*.css" -type f -exec mv {} tempfiles \;
+  - docker run --rm -it --volume="$PWD:/data" mirisbowring/texlive_ctan_basic:2019 ./script/texbuild.sh
+  - rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
+  - rm -v .make4ht
+  - rm -rf script _posts-tex script
+  - find tempfiles -maxdepth 1 -type f -exec mv {} . \;
+  - rm -rf tempfiles
+  - rm -v .travis.yml
 
 deploy:
   provider: pages
