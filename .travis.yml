@@ -21,7 +21,6 @@ before_install:
   - docker pull jekyll/jekyll:4.0
   - docker pull mirisbowring/texlive_ctan_basic:2019
   - chmod +x ./script/texbuild.sh
-  - chmod +x ./script/cibuild.sh
 
 script:
   - docker run --rm -it
