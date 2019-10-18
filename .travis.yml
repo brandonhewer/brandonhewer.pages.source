@@ -17,29 +17,44 @@ exclude: [vendor]
 cache: bundler
 
 before_install:
-  - gem update --system
-  - docker pull jekyll/jekyll:4.0
+  #- gem update --system
+  #- docker pull jekyll/jekyll:4.0
   - docker pull mirisbowring/texlive_ctan_basic:2019
   - chmod +x ./script/texbuild.sh
-  - chmod +x ./script/cibuild.sh
+  #- chmod +x ./script/cibuild.sh
 
 script:
+  - mkdir temp
+  - mv *.html temp
+  - mv *.css temp
+  - htmlfiles=$(find . -name '*.html' | paste -s -d '|' -)
+  - htmlfiles=$(find . -name '*.css' | paste -s -d '|' -)
+  - find . -name '*.html' -print0 -type f | sed 's/\0/\-or/g'
   - docker run --rm -it
       --volume="$PWD:/data"
       mirisbowring/texlive_ctan_basic:2019
       ./script/texbuild.sh
-  - docker run --rm -it
-      --volume="$PWD:/srv/jekyll"
-      --volume="$PWD/vendor/bundle:/usr/local/bundle"
-      -e JEKYLL_UID="$UID" 
-      -e JEKYLL_GID="$GID"
-      jekyll/jekyll:4.0
-      ./script/cibuild.sh
+  - rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
+  - rm .make4ht
+  - rm -rf script
+  - rm -rf _posts-tex
+  - rm -rf script
+  - mv temp/* .
+  - rm -rf temp
+  #- docker run --rm -it
+  #    --volume="$PWD:/srv/jekyll"
+  #    --volume="$PWD/vendor/bundle:/usr/local/bundle"
+  #    -e JEKYLL_UID="$UID" 
+  #    -e JEKYLL_GID="$GID"
+  #    jekyll/jekyll:4.0
+  #    ./script/cibuild.sh
 
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: "$GITHUB_TOKEN"
+  repo: brandonhewer/brandonhewer.github.io
+  target_branch: master
   keep_history: true
   on:
     branch: master
