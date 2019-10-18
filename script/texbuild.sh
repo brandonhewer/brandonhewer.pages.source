@@ -6,4 +6,5 @@ tlmgr install luaxml
 tlmgr install tex4ht
 tlmgr install make4ht
 tlmgr update --all
+sudo apt-get install tidy
 find ./_posts-tex -name "*.tex" -type f -exec make4ht -l -um publish {} "svg" \;
