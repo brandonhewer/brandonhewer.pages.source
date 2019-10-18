@@ -6,26 +6,23 @@ services: docker
 
 env:
   global:
-    secure: "QbL6aCjp3Om+u+CdFM/6q84an2jFDlYegLMQovRXlav4cAAYYjxOU/ffd64x9OUkQZkwAQP9FXNP7WRN+fT0JZCwGPtOdiPfKUp0gWQpP11/IcJ4TMugTUwJuHrTCzZUbUDVkaK6bc2impKbmfAzbRSUAecLbt0l4ErFebyWAS7D2eIBfhrzOEiVwoJvT0WIxLgDFb/WI/3hNLnIqJIQoEniYLMo5+PaXXVig0olroZgEvVRp1UV+eBS7zryWkdxxFD09Le5b76rwfrKR6L5WxLMVvQbnbdikjQq3Xc2rtUhRxUhTnUGnMx/qzBdoNJ/AWJir60t/PtgiO4vNTIm2iyJlU/HTYVV+/cVvjTmXckO6ZDd738FbgknKW8x3/31OLMUlUoTC47AowrqthRpbmwAqKl3OJATPrjCf176qdpN+jrF3958a2B9Zws/QH5F4x9OuYMqMypFC3Fp+McEBUf4+e9qC8slOmnvbKHN2bIGaYiHQseKwcvQmFEB4UhefAQFSK147YZfzFq+TozQnC3y4eExYVKD++P7EP+qnNib38cdVzTYNFapcoz561nQWLtieU1phclO99bel5zfYoW/O0lYxNoEpfOGiHNI/OTCHpHQZo0A/eTkcC/WID5/r8fAijkELAAHElgvrQj1LjXrI5wcI6WbHRfpu2DcV7o="
+  - secure: gUM7Jl/8TQdjP7pUU+k+RgHBx6sAYz0EsgZJD5Bae4FoDuKRLccbOjp+rAGbY2gza9Qbp+9eu5csIupUWKQ7cnZ93OCHgm1gZcwYnVENvvZCjCM3fsFo8EVh3hyOTE+Gs3LbODAWei64BiqssTzYW7DIMkv7aaQywqQasmCNGTLZ9XAZU52ZTqDgJDcS1OeIwcOlv157BKkXOPFTDxOGAJIPIiOs1zYALEpApRq9gWgCBIABX1dNrEoAfwtsErLLncHmCjvpS23no0qPVShc6q5Blo22OpoTMgWd4FLpRSV0mJgdtt075ipZO7Eq2ELQrinb2QVMuIAgjwhe7CvEPyxC771R6tJmitLPIodzwAu/ctHG5Md8MlRzQXVM5WkFYGNSytg3PV1RzGvYsGfxxve0guwDngqOMDtP4JAcrp/7TM4/FHZCydnxVQNjuk1OtIStAsGBDX97z1WKcA1KgrtV6OrTjG6+xom5fZMrnK8VJTOf7qiI0626/GjRhPJnRlPkxeDx4Mn7Ukz2ibVxEEYSMFWikc8lA1EzbujlfQli1iGHBWWST9tSK+3MvucLILQbyJRryvnCM0XbtVTWZxNSsGIMuX4KbKfQhLytKwDa6JkRPiv9ALcBkiZlJAVXcGrBSxZJFZqVPvV4hapMTFEczLz5MkPFXzWUkTFWoLg=
 
-before_install:
-  - docker pull mirisbowring/texlive_ctan_basic:2019
-  - chmod +x ./script/texbuild.sh
+  before_install:
+- docker pull mirisbowring/texlive_ctan_basic:2019
+- chmod +x ./script/texbuild.sh
 
 script:
-  - mkdir tempfiles
-  - find . -maxdepth 1 -name "*.html" -type f -exec mv {} tempfiles \;
-  - find . -maxdepth 1 -name "*.css" -type f -exec mv {} tempfiles \;
-  - docker run --rm -it
-      --volume="$PWD:/data"
-      mirisbowring/texlive_ctan_basic:2019
-      ./script/texbuild.sh
-  - rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
-  - rm -v .make4ht
-  - rm -rf script _posts-tex script
-  - find tempfiles -maxdepth 1 -type f -exec mv {} . \;
-  - rm -rf tempfiles
-  - rm -v .travis.yml
+- mkdir tempfiles
+- find . -maxdepth 1 -name "*.html" -type f -exec mv {} tempfiles \;
+- find . -maxdepth 1 -name "*.css" -type f -exec mv {} tempfiles \;
+- docker run --rm -it --volume="$PWD:/data" mirisbowring/texlive_ctan_basic:2019 ./script/texbuild.sh
+- rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.logs *.html *.css
+- rm -v .make4ht
+- rm -rf script _posts-tex script
+- find tempfiles -maxdepth 1 -type f -exec mv {} . \;
+- rm -rf tempfiles
+- rm -v .travis.yml
 
 deploy:
   provider: pages
