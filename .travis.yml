@@ -14,8 +14,8 @@ before_install:
 
 script:
   - mkdir tempfiles
-  - find . -name "*.html" -maxdepth 1 -type f -exec mv {} tempfiles \;
-  - find . -name "*.css" -maxdepth 1 -type f -exec mv {} tempfiles \;
+  - find . -maxdepth 1 -name "*.html" -type f -exec mv {} tempfiles \;
+  - find . -maxdepth 1 -name "*.css" -type f -exec mv {} tempfiles \;
   - docker run --rm -it
       --volume="$PWD:/data"
       mirisbowring/texlive_ctan_basic:2019
