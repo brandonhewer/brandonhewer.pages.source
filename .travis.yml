@@ -29,7 +29,7 @@ install:
 
 script:
   - docker run --rm -it
-      --volume="$PWD:/work/texlive"
+      --volume="$PWD:/home/latex"
       mirisbowring/texlive_ctan_full:2019
       ./script/texbuild.sh
   - find ./_posts-tex -name "*.tex" -type f -exec make4ht -l -um publish {} "svg" \;
