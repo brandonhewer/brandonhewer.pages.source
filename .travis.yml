@@ -21,6 +21,7 @@ before_install:
   - docker pull jekyll/jekyll:4.0
   - docker pull mirisbowring/texlive_ctan_basic:2019
   - chmod +x ./script/texbuild.sh
+  - chmod +x ./script/cibuild.sh
 
 script:
   - docker run --rm -it
@@ -33,8 +34,7 @@ script:
       -e JEKYLL_UID="$UID" 
       -e JEKYLL_GID="$GID"
       jekyll/jekyll:4.0
-      jekyll build --trace
-  - htmlproofer ./_site --disable-external
+      ./script/cibuild.sh
 
 deploy:
   provider: pages
