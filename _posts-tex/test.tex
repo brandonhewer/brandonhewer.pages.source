@@ -1,4 +1,5 @@
 \documentclass{article}
+\title{Test}
 
 \ifdefined\HCode
   \def\pgfsysdriver{pgfsys-dvisvgm4ht.def}
@@ -7,6 +8,7 @@
 \usepackage{tikz-cd}
 
 \begin{document}
+  \tikzsetexternalprefix{/assets/images/}
   Test!
 
   \begin{equation}\label{eq:nat_vertical}
