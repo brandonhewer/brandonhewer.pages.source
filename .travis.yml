@@ -5,14 +5,14 @@ language: c
 services: docker
 
 before_install:
-  - docker pull mirisbowring/texlive_ctan_basic:2019
+  - docker pull mirisbowring/texlive_ctan_full:2019
   - chmod +x ./script/texbuild.sh
 
 script:
   - mkdir tempfiles
   - find . -maxdepth 1 -name "*.html" -type f -exec mv {} tempfiles \;
   - find . -maxdepth 1 -name "*.css" -type f -exec mv {} tempfiles \;
-  - docker run --rm -it --volume="$PWD:/data" mirisbowring/texlive_ctan_basic:2019 ./script/texbuild.sh
+  - docker run --rm -it --volume="$PWD:/data" mirisbowring/texlive_ctan_full:2019 ./script/texbuild.sh
   - rm -f *.aux *.xref *.tmp *.4tc *.4ct *.idv *.lg *.dvi *.log *.html *.css
   - rm -v .make4ht
   - rm -rf script _posts-tex script
