@@ -15,6 +15,7 @@ filter_settings "staticsite" {
   site_root = outdir, 
   map = {
     [".css$"] = "../assets/css/"
+    [".svg$"] = "../assets/images/"
   },
   header = {
      layout="post",
