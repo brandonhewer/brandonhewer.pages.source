@@ -29,7 +29,7 @@ Make:enable_extension "common_domfilters"
 if mode=="draft" then
   Make:htlatex {}
 elseif mode=="publish" then
-  -- Make:htlatex {}
+  Make:htlatex {}
   Make:match("html$", domprocess)
   Make:enable_extension "tidy"
   Make:enable_extension "staticsite"
