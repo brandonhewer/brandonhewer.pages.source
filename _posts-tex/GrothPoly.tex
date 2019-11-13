@@ -1,0 +1,76 @@
+\documentclass{article}
+
+\ifdefined\HCode
+  \def\pgfsysdriver{pgfsys-dvisvgm4ht.def}
+\fi 
+\usepackage{ebproof}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\title{Syntax, semantics and fibrations}
+\author{Brandon Hewer}
+
+\begin{document}
+  \maketitle
+
+  \noindent
+  To begin this construction, I present the humble (equilateral) triangle.
+
+  \begin{center}
+    \begin{pgfpicture}
+      \pgfpathrectangle{\pgfpointorigin}{\pgfqpoint{80.0000bp}{69.0000bp}}
+      \pgfusepath{use as bounding box}
+      \begin{pgfscope}
+        \definecolor{fc}{rgb}{0.0000,0.0000,0.0000}
+        \pgfsetfillcolor{fc}
+        \pgfpathqmoveto{80.0000bp}{0.0000bp}
+        \pgfpathqlineto{40.0000bp}{69.2820bp}
+        \pgfpathqlineto{0.0000bp}{0.0000bp}
+        \pgfpathqlineto{80.0000bp}{0.0000bp}
+        \pgfpathclose
+        \pgfusepathqfill
+      \end{pgfscope}
+    \end{pgfpicture}
+  \end{center}
+
+  \noindent
+  The first step of constructing Sierpi\'nski's triangle is to divide our triangle into four congruent, equilateral triangles and remove the central triangle.
+
+  \begin{center}
+    \begin{pgfpicture}
+      \pgfpathrectangle{\pgfpointorigin}{\pgfqpoint{80.0000bp}{69.0000bp}}
+      \pgfusepath{use as bounding box}
+      \begin{pgfscope}
+        \definecolor{fc}{rgb}{0.0000,0.0000,0.0000}
+        \pgfsetfillcolor{fc}
+        \pgfpathqmoveto{80.0000bp}{0.0000bp}
+        \pgfpathqlineto{60.0000bp}{34.6410bp}
+        \pgfpathqlineto{40.0000bp}{0.0000bp}
+        \pgfpathqlineto{80.0000bp}{0.0000bp}
+        \pgfpathclose
+        \pgfusepathqfill
+      \end{pgfscope}
+      \begin{pgfscope}
+        \definecolor{fc}{rgb}{0.0000,0.0000,0.0000}
+        \pgfsetfillcolor{fc}
+        \pgfpathqmoveto{40.0000bp}{0.0000bp}
+        \pgfpathqlineto{20.0000bp}{34.6410bp}
+        \pgfpathqlineto{0.0000bp}{0.0000bp}
+        \pgfpathqlineto{40.0000bp}{0.0000bp}
+        \pgfpathclose
+        \pgfusepathqfill
+      \end{pgfscope}
+      \begin{pgfscope}
+        \definecolor{fc}{rgb}{0.0000,0.0000,0.0000}
+        \pgfsetfillcolor{fc}
+        \pgfpathqmoveto{60.0000bp}{34.6410bp}
+        \pgfpathqlineto{40.0000bp}{69.2820bp}
+        \pgfpathqlineto{20.0000bp}{34.6410bp}
+        \pgfpathqlineto{60.0000bp}{34.6410bp}
+        \pgfpathclose
+        \pgfusepathqfill
+      \end{pgfscope}
+    \end{pgfpicture}
+  \end{center}
+
+\end{document}
